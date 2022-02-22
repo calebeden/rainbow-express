@@ -124,7 +124,7 @@ require_once '../includes/connect.php';
 						$stmt->execute();
 						$previous_attendance = $stmt->fetch();
 						if ($previous_attendance == null) {
-							$sql = "INSERT INTO `" . $_GET['property'] . "_attendance_" . date("Y") . "` (`week_of`, `time`, `participants`, `day1`, `day2`, `day3`, `day4`, `salvation`, `notes`) VALUES (:week_of, 0, '[]', '[]', '[]', '[]', '[]', '[]', '[]')";
+							$sql = "INSERT INTO `" . $_GET['property'] . "_attendance_" . date("Y") . "` (`week_of`, `time`, `participants`, `day1`, `day2`, `day3`, `day4`, `salvation`, `notes`, `church_group`) VALUES (:week_of, 0, '[]', '[]', '[]', '[]', '[]', '[]', '[]', '')";
 							$stmt2 = $conn->prepare($sql);
 							$stmt2->bindParam(":week_of", $monday_database, PDO::PARAM_STR);
 							$stmt2->execute();
