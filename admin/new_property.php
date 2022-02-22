@@ -16,7 +16,7 @@ if (!is_admin()) {
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<meta name="description" content="Administrative page to add a new Rainbow Express property" />
+	<meta name="description" content="Admin page to add new property" />
 	<meta name="author" content="Caleb Eden" />
 	<base href="../"></base>
 	<link rel="shortcut icon" href="favicon.ico?" />

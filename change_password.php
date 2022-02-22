@@ -12,11 +12,11 @@ if (!is_logged_in()) {
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<meta name="description" content="Your one-stop shop for all things Overhang" />
+	<meta name="description" content="Change Rainbow Express Password" />
 	<meta name="author" content="Caleb Eden" />
 	<link rel="shortcut icon" href="favicon.ico?" />
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
-	<title>Rainbow Express · Add Account</title>
+	<title>Rainbow Express · Change Password</title>
 </head>
 
 <body>

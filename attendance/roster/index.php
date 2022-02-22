@@ -18,13 +18,13 @@ require_once '../../includes/connect.php';
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Login page for Rainbow Express" />
+	<meta name="description" content="Rainbow Express roster for current property" />
 	<meta name="author" content="Caleb Eden" />
 	<base href="../../">
 	</base>
 	<link rel="shortcut icon" href="favicon.ico?" />
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
-	<title>Rainbow Express · Index</title>
+	<title>Rainbow Express · Roster</title>
 	<style>
 		table {
 			display: block;

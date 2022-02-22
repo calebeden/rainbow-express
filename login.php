@@ -12,7 +12,7 @@ if (is_logged_in()) {
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Login page for Rainbow Express" />
+	<meta name="description" content="Login to Rainbow Express" />
 	<meta name="author" content="Caleb Eden" />
 	<link rel="shortcut icon" href="favicon.ico?" />
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
