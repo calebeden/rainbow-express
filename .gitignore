@@ -1,0 +1,22 @@
+# Ignore extra css files
+/css/*
+# But not the core boostrap one
+!bootstrap.min.css
+
+# Ignore extra js files
+/js/*
+# But not the core boostrap one or jquery
+!bootstrap.bundle.min.js
+!jquery*
+
+# Ignore Bootstrap examples
+/bootstrap-5.1.3-examples
+
+.htaccess
+# Eventually sync .htaccess files if server uses Apache
+# !.htaccess
+
+stresstest*
+todo*
+
+**/.DS_Store
