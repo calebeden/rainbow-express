@@ -55,7 +55,7 @@ try {
 		`properties` json DEFAULT NULL,
 		PRIMARY KEY (`id`),
 		UNIQUE KEY `username` (`username`)
-		) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
+		) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute();
 } catch (Exception $e) {
