@@ -51,7 +51,7 @@ if (isset($_GET['dbname'])) {
 		`name` varchar(255) DEFAULT NULL,
 		`username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
 		`password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-		`permissions` int NOT NULL DEFAULT '1',
+		`permissions` int NOT NULL DEFAULT '0',
 		`properties` json DEFAULT NULL,
 		PRIMARY KEY (`id`),
 		UNIQUE KEY `username` (`username`)
