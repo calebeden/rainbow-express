@@ -43,7 +43,7 @@ require_once '../includes/connect.php';
 				<div class="col-lg-11">
 					<?php
 					try {
-						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='mission-arlington_attendance' AND table_name = '" . $_GET['property'] . "_roster' LIMIT 1";
+						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='rainbow_express' AND table_name = '" . $_GET['property'] . "_roster' LIMIT 1";
 						$stmt = $conn->prepare($sql);
 						$stmt->execute();
 						$table = $stmt->fetch();
@@ -75,7 +75,7 @@ require_once '../includes/connect.php';
 					}
 
 					try {
-						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='mission-arlington_attendance' AND table_name = '" . $_GET['property'] . "_attendance_" . date("Y") . "' LIMIT 1";
+						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='rainbow_express' AND table_name = '" . $_GET['property'] . "_attendance_" . date("Y") . "' LIMIT 1";
 						$stmt = $conn->prepare($sql);
 						$stmt->execute();
 						$table = $stmt->fetch();
@@ -162,7 +162,7 @@ require_once '../includes/connect.php';
 						</fieldset>
 
 						<fieldset class="col-sm col-md col-lg col-xl">
-							<fieldset class="col-xs">
+							<!-- <fieldset class="col-xs">
 								<label class="form-check-label" for="mon-thu">
 									<input class='form-check-input' type='radio' id='mon-thu' style='margin-left:auto; margin-right:auto;' disabled>
 									Monday-Thursday
@@ -171,7 +171,7 @@ require_once '../includes/connect.php';
 									<input class='form-check-input' type='radio' id='thu-sat' style='margin-left:auto; margin-right:auto;' disabled>
 									Thursday-Saturday
 								</label>
-							</fieldset>
+							</fieldset> -->
 							<hr class="d-xs-block d-sm-none" />
 							<fieldset class="col-xs">
 								<label class="form-check-label" for="am">
