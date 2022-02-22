@@ -62,7 +62,7 @@ if (!is_admin()) {
 					<legend><label for="date_of_birth">Date of Birth</label></legend>
 					<p>
 						<input type="date" name="date_of_birth" id="date_of_birth" min="1900-01-01" max="<?php echo date("Y\-m\-d") ?>" required <?php if (isset($date_of_birth)) echo "value='" . $date_of_birth . "'" ?> />
-						<?php echo "(" . date_diff(date_create("1900-01-01"), date_create(date("Y-m-d")))->format("%Y") . " years old)" ?>
+						<!-- <?php echo "(" . date_diff(date_create("1900-01-01"), date_create(date("Y-m-d")))->format("%Y") . " years old)" ?> -->
 					</p>
 				</fieldset>
 
