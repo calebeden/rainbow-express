@@ -26,6 +26,7 @@ if (!is_logged_in()) {
 		<div class="container bg-light">
 			<?php if (isset($_SESSION['created_user'])) {
 				echo "Created new user " . $_SESSION['created_user']['username'] . " with temporary password " . $_SESSION['created_user']['password'] . PHP_EOL;
+				unset($_SESSION['created_user']);
 			}
 			?>
 			<div class="row">
