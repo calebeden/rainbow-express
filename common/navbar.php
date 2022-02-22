@@ -29,14 +29,17 @@
 			</ul>
 
 			<ul class="navbar-nav ">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="" id="dropdownMenu" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
-					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu">
-						<?php echo '<li><p class="dropdown-item disabled" style="color:#16181b"><span class="fas fa-user"></span> ' . $_SESSION['user']['name'] . '</p></li>' ?>
-						<li><a class="dropdown-item" href="change_password.php"><span class="fas fa-lock"></span> Change Password</a></li>
-						<hr>
-						<li><a class="dropdown-item" href="logout.php"><span class="fas fa-sign-out-alt"></span> Log Out</a></li>
-						<!-- <a class="dropdown-item" href=""> Dashboard</a>
+				<?php
+				if (isset($_SESSION['user'])) {
+				?>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="" id="dropdownMenu" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu">
+							<?php echo '<li><p class="dropdown-item disabled" style="color:#16181b"><span class="fas fa-user"></span> ' . $_SESSION['user']['name'] . '</p></li>' ?>
+							<li><a class="dropdown-item" href="change_password.php"><span class="fas fa-lock"></span> Change Password</a></li>
+							<hr>
+							<li><a class="dropdown-item" href="logout.php"><span class="fas fa-sign-out-alt"></span> Log Out</a></li>
+							<!-- <a class="dropdown-item" href=""> Dashboard</a>
 						<div class="container">
 							<a class="dropdown-item" href=""> Feed Posts</a>
 							<a class="dropdown-item" href=""> Shops</a>
@@ -48,8 +51,11 @@
 							<a class="dropdown-item" href="dashboard/settings/change_email.php"> Change Email</a>
 							<a class="dropdown-item" href="dashboard/settings/change_phone.php"> Change Phone Number</a>
 						</div> -->
-					</ul>
-				</li>
+						</ul>
+					</li>
+				<?php
+				}
+				?>
 			</ul>
 
 		</div>
