@@ -17,6 +17,7 @@ try {
 	$stmt->bindParam(":permissions", $_POST['permissions'], PDO::PARAM_INT);
 	$stmt->bindParam(":username", $_POST['username'], PDO::PARAM_STR);
 	$stmt->execute();
+	header('Location: ../');
 	echo "User edited successfully!" . PHP_EOL;
 } catch (Exception $e) {
 	echo $sql . PHP_EOL;
