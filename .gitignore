@@ -17,6 +17,6 @@
 # !.htaccess
 
 stresstest*
-todo*
+# todo*
 
 **/.DS_Store
