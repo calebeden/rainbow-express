@@ -43,7 +43,7 @@ if (password_verify($_POST['current_password'], $results['password'])) {
 		echo "Error: passwords do not match. Please try again." . PHP_EOL;
 		exit;
 	}
-} elseif ($_POST['new_password'] == $results['password']) {
+} elseif ($_POST['old_password'] == $results['password']) {
 	if ($_POST['new_password'] == $_POST['confirm_password']) {
 		$hashed_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
 		try {
