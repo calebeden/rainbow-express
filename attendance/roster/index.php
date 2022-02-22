@@ -57,7 +57,7 @@ require_once '../../includes/connect.php';
 					}
 					try {
 						$sql = "SELECT * FROM `" . $_GET['property'] . "_roster`";
-						$stmt = $conn_attend->prepare($sql);
+						$stmt = $conn->prepare($sql);
 						$stmt->execute();
 						$rows = $stmt->fetchAll();
 					} catch (Exception $e) {
@@ -75,7 +75,7 @@ require_once '../../includes/connect.php';
 						$today = date("Y-m-d");
 
 						$sql = "SELECT `participants`, `id`, `week_of` FROM `" . $_GET['property'] . "_attendance_" . date("Y") . "` WHERE `id`=:id LIMIT 1";
-						$stmt = $conn_attend->prepare($sql);
+						$stmt = $conn->prepare($sql);
 						$stmt->bindParam(":id", $_GET['week']);
 						$stmt->execute();
 						$results = $stmt->fetch();

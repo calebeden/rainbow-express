@@ -10,20 +10,20 @@ require_once '../includes/connect.php';
 if (isset($_GET['property']) && isset($_GET['row']) && isset($_GET['column']) && isset($_GET['week'])) {
 	// for ($day = 1; $day <= 4; $day++) {
 	// 	if ($_GET['column'] == 'day' . $day) {
-	// 		toggle_attendance('day' . $day, $_GET['week'], $_GET['property'], $conn_attend);
+	// 		toggle_attendance('day' . $day, $_GET['week'], $_GET['property'], $conn);
 	// 	}
 	// }
 	// if ($_GET['column'] == 'salvation') {
-	// 	toggle_attendance('salvations', $_GET['week'], $_GET['property'], $conn_attend);
+	// 	toggle_attendance('salvations', $_GET['week'], $_GET['property'], $conn);
 	// }
 	foreach (array("day1", "day2", "day3", "day4", "salvation") as $column){
 		if ($_GET['column'] == $column) {
-			toggle_attendance($column, $_GET['week'], $_GET['property'], $conn_attend);
+			toggle_attendance($column, $_GET['week'], $_GET['property'], $conn);
 		}
 	}
 	// }
 	// if ($_GET['column'] == 'salvation') {
-	// 	toggle_attendance('salvations', $_GET['week'], $_GET['property'], $conn_attend);
+	// 	toggle_attendance('salvations', $_GET['week'], $_GET['property'], $conn);
 	// }
 }
 

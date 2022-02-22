@@ -11,7 +11,7 @@ if (isset($_GET['note']) && isset($_GET['property']) && isset($_GET['week']) && 
 	try {
 		// get previous value
 		$sql = "SELECT * FROM `" . $_GET['property'] . "_attendance_" . date("Y") . "` WHERE `id`=:week LIMIT 1";
-		$stmt = $conn_attend->prepare($sql);
+		$stmt = $conn->prepare($sql);
 		$stmt->bindParam(":week", $_GET['week'], PDO::PARAM_INT);
 		$stmt->execute();
 		$results = $stmt->fetch();
@@ -30,7 +30,7 @@ if (isset($_GET['note']) && isset($_GET['property']) && isset($_GET['week']) && 
 
 	try {
 		$sql = "UPDATE `" . $_GET['property'] . "_attendance_" . date("Y") . "` SET `notes`=:notes WHERE `id`=:id";
-		$stmt = $conn_attend->prepare($sql);
+		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(":notes", json_encode($notes), PDO::PARAM_STR);
 		$stmt->bindParam(":id", $_GET['week'], PDO::PARAM_INT);
 		$stmt->execute();

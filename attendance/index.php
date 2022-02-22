@@ -44,7 +44,7 @@ require_once '../includes/connect.php';
 					<?php
 					try {
 						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='mission-arlington_attendance' AND table_name = '" . $_GET['property'] . "_roster' LIMIT 1";
-						$stmt = $conn_attend->prepare($sql);
+						$stmt = $conn->prepare($sql);
 						$stmt->execute();
 						$table = $stmt->fetch();
 					} catch (Exception $e) {
@@ -66,7 +66,7 @@ require_once '../includes/connect.php';
 								`date_of_birth` date NOT NULL,
 								PRIMARY KEY (`id`)
 								) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-							$stmt = $conn_attend->prepare($sql);
+							$stmt = $conn->prepare($sql);
 							$stmt->execute();
 						}
 					} catch (Exception $e) {
@@ -76,7 +76,7 @@ require_once '../includes/connect.php';
 
 					try {
 						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='mission-arlington_attendance' AND table_name = '" . $_GET['property'] . "_attendance_" . date("Y") . "' LIMIT 1";
-						$stmt = $conn_attend->prepare($sql);
+						$stmt = $conn->prepare($sql);
 						$stmt->execute();
 						$table = $stmt->fetch();
 					} catch (Exception $e) {
@@ -100,7 +100,7 @@ require_once '../includes/connect.php';
 								`notes` json NOT NULL,
 								PRIMARY KEY (`id`)
 								) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
-							$stmt = $conn_attend->prepare($sql);
+							$stmt = $conn->prepare($sql);
 							$stmt->execute();
 						}
 					} catch (Exception $e) {
@@ -119,13 +119,13 @@ require_once '../includes/connect.php';
 						$monday_database = date('Y-m-d', $week_of);
 						$monday_visual = date('M d\, Y', $week_of);
 						$sql = "SELECT * FROM `" . $_GET['property'] . "_attendance_" . date("Y") . "` WHERE `week_of`=:week_of";
-						$stmt = $conn_attend->prepare($sql);
+						$stmt = $conn->prepare($sql);
 						$stmt->bindParam(":week_of", $monday_database, PDO::PARAM_STR);
 						$stmt->execute();
 						$previous_attendance = $stmt->fetch();
 						if ($previous_attendance == null) {
 							$sql = "INSERT INTO `" . $_GET['property'] . "_attendance_" . date("Y") . "` (`week_of`, `time`, `participants`, `day1`, `day2`, `day3`, `day4`, `salvation`, `notes`) VALUES (:week_of, 0, '[]', '[]', '[]', '[]', '[]', '[]', '[]')";
-							$stmt2 = $conn_attend->prepare($sql);
+							$stmt2 = $conn->prepare($sql);
 							$stmt2->bindParam(":week_of", $monday_database, PDO::PARAM_STR);
 							$stmt2->execute();
 						}
@@ -144,7 +144,7 @@ require_once '../includes/connect.php';
 						<?php
 						try {
 							$sql = "SELECT `participants`, `notes`, `church_group` FROM `" . $_GET['property'] . "_attendance_" . date("Y") . "` WHERE `week_of`=:week_of LIMIT 1";
-							$stmt = $conn_attend->prepare($sql);
+							$stmt = $conn->prepare($sql);
 							$stmt->bindParam(":week_of", $monday_database);
 							$stmt->execute();
 							$results = $stmt->fetch();
@@ -210,7 +210,7 @@ require_once '../includes/connect.php';
 								$today = date("Y-m-d");
 
 								$sql = "SELECT * FROM `" . $_GET['property'] . "_roster` WHERE `id`=:id LIMIT 1";
-								$stmt = $conn_attend->prepare($sql);
+								$stmt = $conn->prepare($sql);
 								$stmt->bindParam(":id", $user_id);
 								foreach (json_decode($results['participants']) as $user_id) {
 									$stmt->execute();
