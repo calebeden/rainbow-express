@@ -37,6 +37,9 @@ remember me on login page - needs client side cookies
 Go back and do graceful degredation for css and js
 Edit and delete participant records
 
+1.2 Release:
+New roster for each year
+
 At very end:
 Clean up code and comments
 Get fontawesome off my development kit
