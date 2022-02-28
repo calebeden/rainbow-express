@@ -6,7 +6,6 @@ Admin can view full list of username=>name
 error message for when trying to create duplicate location name
 auto-save message on JS-submitted info
 alert when trying to remove a participant with info already for the week
-Favicon
 Lock out of days not currently editing for attendance by disabling checkboxes until button pressed
 Something is weird about the placeholders for logging in
 Age calculator for new participant
@@ -23,19 +22,19 @@ Security:
 Validate forms on client and server side (ex. the keyup function could let someone submit if they are fast enough)
 .htaccess file(s) and error pages
 -also redirect away from restricted pages (ex. *_sql.php)
+ASSIGN church groups to sites rather than having them type it out themselves
 
 1.1 Release:
-View previous weeks
-Get stats/report with admin level
--will need to be able to sort and filter sites
-ASSIGN church groups to sites rather than having them type it out themselves
+View previous weeks on site-level
+Filter sites when generating weekly report
 Change GET to POST for JS queries to SQL
 Mark if Thurs-indexed
 Sort and search roster
-Turn roster and attendance into forms for non-JS
 remember me on login page - needs client side cookies
 Go back and do graceful degredation for css and js
-Edit and delete participant records
+-Turn roster and attendance into forms for non-JS
+Edit and delete participant records in roster
+Favicon
 
 1.2 Release:
 New roster for each year
@@ -44,4 +43,3 @@ At very end:
 Clean up code and comments
 Get fontawesome off my development kit
 Figure out production alternative for WAMP that uses innoDB or ISAM (see bullet above for database type)
-Reset databases (including primary key indices)
