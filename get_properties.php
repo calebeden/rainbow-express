@@ -25,7 +25,7 @@ try {
 	// 	}
 	// }
 	while ($row = $stmt->fetch()) {
-		if (is_admin() || can_access($row['id'])) {
+		if (can_access($row['id'])) {
 			$results[] = ['id' => $row['id'], 'name' => $row['name']];
 		}
 	}

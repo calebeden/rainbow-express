@@ -21,11 +21,7 @@ if ($results) {
 	// Account exists, now we verify the password.
 	if (password_verify($_POST['password'], $results['password'])) {
 		session_regenerate_id();
-		$_SESSION['user'] = array('username'=> $_POST['username'], 'id'=>$results['id'], 'permissions'=>$results['permissions'], 'name'=>$results['name']);
-		// $_SESSION['username'] = $_POST['username'];
-		// $_SESSION['id'] = $results['id'];
-		// $_SESSION['permissions'] = $results['permissions'];
-		// $_SESSION['name'] = $results['name'];
+		$_SESSION['user'] = array('username'=> $_POST['username'], 'id'=>$results['id'], 'permissions'=>$results['permissions'], 'name'=>$results['name'], 'properties'=>json_decode($results['properties']));
 		$_SESSION['login_error'] = FALSE;
 
 		$property_array = json_decode($results['properties']);
@@ -54,11 +50,7 @@ if ($results) {
 	} elseif ($_POST['password'] == $results['password']) {
 		// This should only really be true when someone goes in the backend to add an account directly in the database and therefore does not have access to password_hash()
 		session_regenerate_id();
-		$_SESSION['user'] = array('username'=> $_POST['username'], 'id'=>$results['id'], 'permissions'=>$results['permissions'], 'name'=>$results['name']);
-		// $_SESSION['username'] = $_POST['username'];
-		// $_SESSION['id'] = $results['id'];
-		// $_SESSION['permissions'] = $results['permissions'];
-		// $_SESSION['name'] = $results['name'];
+		$_SESSION['user'] = array('username'=> $_POST['username'], 'id'=>$results['id'], 'permissions'=>$results['permissions'], 'name'=>$results['name'], 'properties'=>json_decode($results['properties']));
 		$_SESSION['login_error'] = FALSE;
 
 		$property_array = json_decode($results['properties']);
