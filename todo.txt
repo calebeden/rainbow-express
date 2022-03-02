@@ -7,7 +7,7 @@ error message for when trying to create duplicate location name
 auto-save message on JS-submitted info
 alert when trying to remove a participant with info already for the week
 Lock out of days not currently editing for attendance by disabling checkboxes until button pressed
-Something is weird about the placeholders for logging in
+Something is weird about the floating label placeholders for logging in
 Age calculator for new participant
 
 Formatting and Background Details:
@@ -35,6 +35,7 @@ Go back and do graceful degredation for css and js
 -Turn roster and attendance into forms for non-JS
 Edit and delete participant records in roster
 Favicon
+Change password if auto-generated for first login
 
 1.2 Release:
 New roster for each year
