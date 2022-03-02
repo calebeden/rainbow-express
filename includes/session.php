@@ -16,7 +16,5 @@ function is_admin()
 // CURRENTLY USING A DIFFERENT VERSION OF THE FUNCTION, CAN EASILY SWITCH BACK IF M.A. WANTS TO RESTRICT WHO CAN ACCESS WHICH PROPERTY
 function can_access($property_id)
 {
-	// return is_admin() || in_array($site_id, $_SESSION['properties']);
-	// return true;
-	return in_array($property_id, $_SESSION['properties']);
+	return is_admin() || in_array($property_id, $_SESSION['properties']);
 }
