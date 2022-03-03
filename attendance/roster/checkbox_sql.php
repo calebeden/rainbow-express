@@ -8,9 +8,10 @@ if (!is_logged_in()) {
 require_once '../../includes/connect.php';
 
 if (isset($_GET['property']) && isset($_GET['row']) && isset($_GET['week'])) {
+	$attendance_table = attendance_table($_GET['property'], date("Y"));
 	try {
 		// get previous value
-		$sql = "SELECT `participants` FROM `" . $_GET['property'] . "_attendance_" . date("Y") . "` WHERE `id`=:id LIMIT 1";
+		$sql = "SELECT `participants` FROM `$attendance_table` WHERE `id`=:id LIMIT 1";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindParam(":id", $_GET['week'], PDO::PARAM_INT);
 		$stmt->execute();
@@ -27,7 +28,7 @@ if (isset($_GET['property']) && isset($_GET['row']) && isset($_GET['week'])) {
 		array_splice($new_participants, $key, 1);
 
 		try {
-			$sql = "UPDATE `" . $_GET['property'] . "_attendance_" . date("Y") . "` SET `participants`=:participants WHERE `id`=:id";
+			$sql = "UPDATE `$attendance_table` SET `participants`=:participants WHERE `id`=:id";
 			$stmt = $conn->prepare($sql);
 			$stmt->bindValue(":participants", json_encode($new_participants), PDO::PARAM_STR);
 			$stmt->bindParam(":id", $_GET['week'], PDO::PARAM_INT);
@@ -41,7 +42,7 @@ if (isset($_GET['property']) && isset($_GET['row']) && isset($_GET['week'])) {
 		$new_participants[] = (int)$_GET['row'];
 
 		try {
-			$sql = "UPDATE `" . $_GET['property'] . "_attendance_" . date("Y") . "` SET `participants`=:participants WHERE `id`=:id";
+			$sql = "UPDATE `$attendance_table` SET `participants`=:participants WHERE `id`=:id";
 			$stmt = $conn->prepare($sql);
 			$stmt->bindValue(":participants", json_encode($new_participants), PDO::PARAM_STR);
 			$stmt->bindParam(":id", $_GET['week'], PDO::PARAM_INT);

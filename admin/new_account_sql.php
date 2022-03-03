@@ -13,7 +13,7 @@ require_once '../includes/connect.php';
 
 try {
 	//test if username is taken first
-	$sql = "SELECT `username` FROM `users` WHERE `username`=:username";
+	$sql = "SELECT `username` FROM `$users_table` WHERE `username`=:username";
 	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(":username", $_POST['username'], PDO::PARAM_STR);
 	$stmt->execute();
@@ -40,7 +40,7 @@ if ($count > 0) {
 $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 try {
-	$sql = "INSERT INTO `users` (`username`, `password`, `permissions`, `name`) VALUES (:username, :password, :permissions, :name)";
+	$sql = "INSERT INTO `$users_table` (`username`, `password`, `permissions`, `name`) VALUES (:username, :password, :permissions, :name)";
 	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(":username", $_POST['username'], PDO::PARAM_STR);
 	$stmt->bindParam(":password", $hashed_password, PDO::PARAM_STR);

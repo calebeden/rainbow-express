@@ -13,7 +13,7 @@ require_once '../includes/connect.php';
 
 try {
 	//test if property already exists
-	$sql = "SELECT `name` FROM `properties` WHERE `name`=:name";
+	$sql = "SELECT `name` FROM `$properties_table` WHERE `name`=:name";
 	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(":name", $_POST['property_name'], PDO::PARAM_STR);
 	$stmt->execute();
@@ -40,7 +40,7 @@ if ($count > 0) {
 
 
 try {
-	$sql = "INSERT INTO `properties` (`name`, `street`, `city`, `state`, `zip`) VALUES (:name, :street, :city, :state, :zip)";
+	$sql = "INSERT INTO `$properties_table` (`name`, `street`, `city`, `state`, `zip`) VALUES (:name, :street, :city, :state, :zip)";
 	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(":name", $_POST['property_name'], PDO::PARAM_STR);
 	$stmt->bindParam(":street", $_POST['street'], PDO::PARAM_STR);

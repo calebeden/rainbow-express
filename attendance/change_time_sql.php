@@ -9,7 +9,8 @@ require_once '../includes/connect.php';
 
 if (isset($_GET['time']) && isset($_GET['property']) && isset($_GET['week'])) {
 	try {
-		$sql = "UPDATE `" . $_GET['property'] . "_attendance_" . date("Y") . "` SET `time`=:time WHERE `id`=:id";
+		$attendance_table = attendance_table($_GET['property'], date("Y"));
+		$sql = "UPDATE `$attendance_table` SET `time`=:time WHERE `id`=:id";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(":time", $_GET['time'], PDO::PARAM_STR);
 		$stmt->bindParam(":id", $_GET['week'], PDO::PARAM_INT);

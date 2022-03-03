@@ -8,7 +8,8 @@ if (!isset($_POST['username'], $_POST['password'])) {
 }
 
 try {
-	$stmt = $conn->prepare('SELECT `id`, `password`, `name`, `permissions`, `properties` FROM `users` WHERE `username`=:username');
+	$sql = "SELECT `id`, `password`, `name`, `permissions`, `properties` FROM `$users_table` WHERE `username`=:username";
+	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(':username', $_POST['username']);
 	$stmt->execute();
 	$results = $stmt->fetch();
@@ -22,10 +23,6 @@ if ($results) {
 	if (password_verify($_POST['password'], $results['password'])) {
 		session_regenerate_id();
 		$_SESSION['user'] = array('username'=> $_POST['username'], 'id'=>$results['id'], 'permissions'=>$results['permissions'], 'name'=>$results['name']);
-		// $_SESSION['username'] = $_POST['username'];
-		// $_SESSION['id'] = $results['id'];
-		// $_SESSION['permissions'] = $results['permissions'];
-		// $_SESSION['name'] = $results['name'];
 		$_SESSION['login_error'] = FALSE;
 
 		$property_array = json_decode($results['properties']);
@@ -38,7 +35,7 @@ if ($results) {
 		try {
 			if (password_needs_rehash($results['password'], PASSWORD_DEFAULT)) {
 				$hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-				$sql = "UPDATE `users` SET `password`=:password WHERE `users`.`id` = " . $id;
+				$sql = "UPDATE `$users_table` SET `password`=:password WHERE `users`.`id` = " . $id;
 				$stmt = $conn->prepare($sql);
 				$stmt->bindParam(":password", $hashed_password, PDO::PARAM_STR);
 				$stmt->execute();
@@ -55,10 +52,6 @@ if ($results) {
 		// This should only really be true when someone goes in the backend to add an account directly in the database and therefore does not have access to password_hash()
 		session_regenerate_id();
 		$_SESSION['user'] = array('username'=> $_POST['username'], 'id'=>$results['id'], 'permissions'=>$results['permissions'], 'name'=>$results['name']);
-		// $_SESSION['username'] = $_POST['username'];
-		// $_SESSION['id'] = $results['id'];
-		// $_SESSION['permissions'] = $results['permissions'];
-		// $_SESSION['name'] = $results['name'];
 		$_SESSION['login_error'] = FALSE;
 
 		$property_array = json_decode($results['properties']);
@@ -69,7 +62,7 @@ if ($results) {
 
 		// this password is currently stored as plaintext; CHANGE IMMEDIATELY
 		$_SESSION['plaintext_password'] = true;
-		header('Location: ../change_password.php'); // need to come back here and change this link when file created for resetting password
+		header('Location: ../change_password.php');
 		exit;
 	} else {
 		$_SESSION['login_error'] = TRUE;

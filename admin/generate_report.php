@@ -156,7 +156,7 @@ class PDF extends FPDF
 
 
 try {
-	$sql = "SELECT properties FROM `dates` WHERE `id`=:id LIMIT 1";
+	$sql = "SELECT properties FROM `$dates_table` WHERE `id`=:id LIMIT 1";
 	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(":id", $date_components[1], PDO::PARAM_INT);
 	$stmt->execute();
@@ -173,7 +173,8 @@ $evening_sites = array();
 $tabledata = array();
 foreach ($properties as $key => $property) {
 	try {
-		$sql = "SELECT * FROM `" . $property . "_attendance_" . $_POST['year'] . "` WHERE `week_of`=:week_of LIMIT 1";
+		$attendance_table = attendance_table($property, $_POST['year']);
+		$sql = "SELECT * FROM `$attendance_table` WHERE `week_of`=:week_of LIMIT 1";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(":week_of", $_POST['year'] . "-" . $_POST['month'] . "-" . $date_components[0]);
 		$stmt->execute();
@@ -183,7 +184,7 @@ foreach ($properties as $key => $property) {
 		echo "Error retrieving attendance for selected date:" . $e->getMessage() . PHP_EOL;
 	}
 	try {
-		$sql = "SELECT `name` FROM `properties` WHERE `id`=:id LIMIT 1";
+		$sql = "SELECT `name` FROM `$properties_table` WHERE `id`=:id LIMIT 1";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindParam(":id", $property, PDO::PARAM_INT);
 		$stmt->execute();

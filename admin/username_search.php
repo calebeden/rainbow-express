@@ -3,7 +3,7 @@ require_once "../includes/connect.php";
 
 try {
 	//search for username
-	$sql = "SELECT `username`, `permissions`, `name` FROM `users` WHERE `username`=:username";
+	$sql = "SELECT `username`, `permissions`, `name` FROM `$users_table` WHERE `username`=:username";
 	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(":username", $_GET['username'], PDO::PARAM_STR);
 	$stmt->execute();

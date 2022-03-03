@@ -33,7 +33,7 @@ require_once '../includes/connect.php';
 		<div class="container card pb-2">
 			<?php
 			try {
-				$sql = "SELECT * FROM `dates`";
+				$sql = "SELECT * FROM `$dates_table`";
 				$stmt = $conn->prepare($sql);
 				$stmt->execute();
 				$results = $stmt->fetchAll();

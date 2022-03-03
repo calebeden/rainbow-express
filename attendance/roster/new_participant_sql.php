@@ -11,9 +11,11 @@ if (!is_admin()) {
 
 require_once '../../includes/connect.php';
 
+$roster_table = roster_table($_POST['property'], date("Y"));
+
 try {
 	//test if participant already exists
-	$sql = "SELECT `name` FROM `" . $_POST['property'] . "_roster` WHERE `name`=:name AND `date_of_birth`=:dob";
+	$sql = "SELECT `name` FROM `$roster_table` WHERE `name`=:name AND `date_of_birth`=:dob";
 	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(":name", $_POST['name'], PDO::PARAM_STR);
 	$stmt->bindParam(":dob", $_POST['date_of_birth'], PDO::PARAM_STR);
@@ -45,7 +47,7 @@ if ($count > 0) {
 
 
 try {
-	$sql = "INSERT INTO `" . $_POST['property'] . "_roster` (`name`, `nickname`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `zip`) VALUES (:name, :nickname, :dob, :address1, :address2, :city, :state, :zip)";
+	$sql = "INSERT INTO `$roster_table` (`name`, `nickname`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `zip`) VALUES (:name, :nickname, :dob, :address1, :address2, :city, :state, :zip)";
 	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(":name", $_POST['name'], PDO::PARAM_STR);
 	$stmt->bindParam(":nickname", $_POST['nickname'], PDO::PARAM_STR);

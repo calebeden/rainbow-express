@@ -42,8 +42,11 @@ require_once '../includes/connect.php';
 				<div class="col"></div>
 				<div class="col-lg-11">
 					<?php
+					$roster_table = roster_table($_GET['property'], date("Y"));
+					$attendance_table = attendance_table($_GET['property'], date("Y"));
+
 					try {
-						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='rainbow_express' AND table_name = '" . $_GET['property'] . "_roster' LIMIT 1";
+						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='$dbname' AND table_name = '$roster_table' LIMIT 1";
 						$stmt = $conn->prepare($sql);
 						$stmt->execute();
 						$table = $stmt->fetch();
@@ -51,10 +54,10 @@ require_once '../includes/connect.php';
 						echo $sql . PHP_EOL;
 						echo "Error retreiving property information:" . $e->getMessage() . PHP_EOL;
 					}
-					try {
-						if ($table == null) {
-							// first time this property has ever been loaded; create new table accordingly
-							$sql = "CREATE TABLE `" . $_GET['property'] . "_roster` (
+					if ($table == null) {
+						try {
+							// first time this property has been loaded this year; create new roster table accordingly
+							$sql = "CREATE TABLE `$roster_table` (
 								`id` int NOT NULL AUTO_INCREMENT,
 								`name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 								`nickname` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -65,17 +68,17 @@ require_once '../includes/connect.php';
 								`zip` int DEFAULT NULL,
 								`date_of_birth` date NOT NULL,
 								PRIMARY KEY (`id`)
-								) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+								) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 							$stmt = $conn->prepare($sql);
 							$stmt->execute();
+						} catch (Exception $e) {
+							echo $sql . PHP_EOL;
+							echo "Error creating roster for current year:" . $e->getMessage() . PHP_EOL;
 						}
-					} catch (Exception $e) {
-						echo $sql . PHP_EOL;
-						echo "Error creating roster for current year:" . $e->getMessage() . PHP_EOL;
 					}
 
 					try {
-						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='rainbow_express' AND table_name = '" . $_GET['property'] . "_attendance_" . date("Y") . "' LIMIT 1";
+						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='$dbname' AND table_name = '$attendance_table' LIMIT 1";
 						$stmt = $conn->prepare($sql);
 						$stmt->execute();
 						$table = $stmt->fetch();
@@ -83,10 +86,10 @@ require_once '../includes/connect.php';
 						echo $sql . PHP_EOL;
 						echo "Error retreiving property information:" . $e->getMessage() . PHP_EOL;
 					}
-					try {
-						if ($table == null) {
-							// first time this property has been loaded for the year; create new table accordingly
-							$sql = "CREATE TABLE `" . $_GET['property'] . "_attendance_" . date("Y") . "` (
+					if ($table == null) {
+						try {
+							// first time this property has been loaded for the year; create new attendance table accordingly
+							$sql = "CREATE TABLE `$attendance_table` (
 								`id` int NOT NULL AUTO_INCREMENT,
 								`week_of` date NOT NULL,
 								`church_group` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -102,29 +105,93 @@ require_once '../includes/connect.php';
 								) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
 							$stmt = $conn->prepare($sql);
 							$stmt->execute();
+						} catch (Exception $e) {
+							echo $sql . PHP_EOL;
+							echo "Error creating roster for current year:" . $e->getMessage() . PHP_EOL;
 						}
+					}
+
+					$week_of = strtotime("Monday this week");
+					$monday_database = date('Y-m-d', $week_of);
+					$monday_visual = date('M d\, Y', $week_of);
+
+					try {
+						$sql = "SELECT `id` FROM `$dates_table` WHERE `year`=:year AND `month`=:month AND `date`=:date";
+						$stmt = $conn->prepare($sql);
+						$stmt->bindValue(":year", date("Y", $week_of), PDO::PARAM_INT);
+						$stmt->bindValue(":month", date("m", $week_of), PDO::PARAM_INT);
+						$stmt->bindValue(":date", date("d", $week_of), PDO::PARAM_INT);
+						$stmt->execute();
+						$previous = $stmt->fetch();
 					} catch (Exception $e) {
 						echo $sql . PHP_EOL;
-						echo "Error creating roster for current year:" . $e->getMessage() . PHP_EOL;
+						echo "Error creating row for current week:" . $e->getMessage() . PHP_EOL;
+					}
+					if (!$previous) {
+						try {
+							// first time this week has been loaded; create new row accordingly
+							$sql = "INSERT INTO `$dates_table` (`year`, `month`, `date`, `properties`) VALUES (:year, :month, :date, :array);";
+							$stmt = $conn->prepare($sql);
+							$stmt->bindValue(":year", date("Y", $week_of), PDO::PARAM_INT);
+							$stmt->bindValue(":month", date("m", $week_of), PDO::PARAM_INT);
+							$stmt->bindValue(":date", date("d", $week_of), PDO::PARAM_INT);
+							$stmt->bindValue(":array", "[" . $_GET['property'] . "]");
+							$stmt->execute();
+						} catch (Exception $e) {
+							echo $sql . PHP_EOL;
+							echo "Error creating row for current week:" . $e->getMessage() . PHP_EOL;
+						}
+					} else {
+						// week has been loaded before; ensure current property included in current week
+						try {
+							$sql = "SELECT `properties` FROM `$dates_table` WHERE `year`=:year AND `month`=:month AND `date`=:date LIMIT 1";
+							$stmt = $conn->prepare($sql);
+							$stmt->bindValue(":year", date("Y", $week_of), PDO::PARAM_INT);
+							$stmt->bindValue(":month", date("m", $week_of), PDO::PARAM_INT);
+							$stmt->bindValue(":date", date("d", $week_of), PDO::PARAM_INT);
+							$stmt->execute();
+							$properties = ($stmt->fetch())['properties'];
+							$properties = json_decode($properties);
+						} catch (Exception $e) {
+							echo $sql . PHP_EOL;
+							echo "Error retreiving week information:" . $e->getMessage() . PHP_EOL;
+						}
+						if (!in_array($_GET['property'], $properties)) {
+							// week created but need to put this property into `properties`
+							array_push($properties, intval($_GET['property']));
+							try {
+								$sql = "UPDATE `$dates_table` SET `properties`=:properties WHERE `year`=:year AND `month`=:month AND `date`=:date LIMIT 1";
+								$stmt = $conn->prepare($sql);
+								$stmt->bindValue(":year", date("Y", $week_of), PDO::PARAM_INT);
+								$stmt->bindValue(":month", date("m", $week_of), PDO::PARAM_INT);
+								$stmt->bindValue(":date", date("d", $week_of), PDO::PARAM_INT);
+								$stmt->bindParam(":properties", json_encode($properties), PDO::PARAM_STR);
+								$stmt->execute();
+							} catch (Exception $e) {
+								echo $sql . PHP_EOL;
+								echo "Error updating week information:" . $e->getMessage() . PHP_EOL;
+							}
+						}
 					}
 
 					try {
-						$sql = "SELECT `name` FROM `properties` WHERE `id`=:id LIMIT 1";
+						$sql = "SELECT `name` FROM `$properties_table` WHERE `id`=:id LIMIT 1";
 						$stmt = $conn->prepare($sql);
 						$stmt->bindParam(":id", $_GET['property'], PDO::PARAM_INT);
 						$stmt->execute();
-						$result = $stmt->fetch();
-
-						$week_of = strtotime("Monday this week");
-						$monday_database = date('Y-m-d', $week_of);
-						$monday_visual = date('M d\, Y', $week_of);
-						$sql = "SELECT * FROM `" . $_GET['property'] . "_attendance_" . date("Y") . "` WHERE `week_of`=:week_of";
+						$property_name = ($stmt->fetch())['name'];
+					} catch (Exception $e) {
+						echo $sql . PHP_EOL;
+						echo "Error retreiving property information:" . $e->getMessage() . PHP_EOL;
+					}
+					try {
+						$sql = "SELECT * FROM `$attendance_table` WHERE `week_of`=:week_of";
 						$stmt = $conn->prepare($sql);
 						$stmt->bindParam(":week_of", $monday_database, PDO::PARAM_STR);
 						$stmt->execute();
 						$previous_attendance = $stmt->fetch();
 						if ($previous_attendance == null) {
-							$sql = "INSERT INTO `" . $_GET['property'] . "_attendance_" . date("Y") . "` (`week_of`, `time`, `participants`, `day1`, `day2`, `day3`, `day4`, `salvation`, `notes`, `church_group`) VALUES (:week_of, 0, '[]', '[]', '[]', '[]', '[]', '[]', '[]', '')";
+							$sql = "INSERT INTO `$attendance_table` (`week_of`, `time`, `participants`, `day1`, `day2`, `day3`, `day4`, `salvation`, `notes`, `church_group`) VALUES (:week_of, 0, '[]', '[]', '[]', '[]', '[]', '[]', '[]', '')";
 							$stmt2 = $conn->prepare($sql);
 							$stmt2->bindParam(":week_of", $monday_database, PDO::PARAM_STR);
 							$stmt2->execute();
@@ -133,17 +200,17 @@ require_once '../includes/connect.php';
 						$stmt->execute();
 						$previous_attendance = $stmt->fetch();
 						$week_id = $previous_attendance['id'];
-						echo "<h1>Taking attendance for <b>" . $result['name'] . "</b> on the week of <b>" . $monday_visual . "</b></h1>" . PHP_EOL;
+						echo "<h1>Taking attendance for <b>" . $property_name . "</b> on the week of <b>" . $monday_visual . "</b></h1>" . PHP_EOL;
 					} catch (Exception $e) {
 						echo $sql . PHP_EOL;
-						echo "Error retreiving property information:" . $e->getMessage() . PHP_EOL;
+						echo "Error retreiving attendance information:" . $e->getMessage() . PHP_EOL;
 					}
 					?>
 
 					<div class="mb-3 row">
 						<?php
 						try {
-							$sql = "SELECT `participants`, `notes`, `church_group` FROM `" . $_GET['property'] . "_attendance_" . date("Y") . "` WHERE `week_of`=:week_of LIMIT 1";
+							$sql = "SELECT `participants`, `notes`, `church_group` FROM `$attendance_table` WHERE `week_of`=:week_of LIMIT 1";
 							$stmt = $conn->prepare($sql);
 							$stmt->bindParam(":week_of", $monday_database);
 							$stmt->execute();
@@ -209,7 +276,7 @@ require_once '../includes/connect.php';
 							try {
 								$today = date("Y-m-d");
 
-								$sql = "SELECT * FROM `" . $_GET['property'] . "_roster` WHERE `id`=:id LIMIT 1";
+								$sql = "SELECT * FROM `$roster_table` WHERE `id`=:id LIMIT 1";
 								$stmt = $conn->prepare($sql);
 								$stmt->bindParam(":id", $user_id);
 								foreach (json_decode($results['participants']) as $user_id) {

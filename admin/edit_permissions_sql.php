@@ -11,7 +11,7 @@ if (!is_admin()) {
 
 require_once '../includes/connect.php';
 
-$sql = "UPDATE `users` SET `permissions`=:permissions WHERE `users`.`username`=:username";
+$sql = "UPDATE `$users_table` SET `permissions`=:permissions WHERE `" . $users_table . "`.`username`=:username";
 $stmt = $conn->prepare($sql);
 try {
 	$stmt->bindParam(":permissions", $_POST['permissions'], PDO::PARAM_INT);

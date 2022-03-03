@@ -8,9 +8,10 @@ if (!is_logged_in()) {
 require_once '../includes/connect.php';
 
 if (isset($_GET['note']) && isset($_GET['property']) && isset($_GET['week']) && isset($_GET['participant'])) {
+	$attendance_table = attendance_table($_GET['property'], date("Y"));
 	try {
 		// get previous value
-		$sql = "SELECT * FROM `" . $_GET['property'] . "_attendance_" . date("Y") . "` WHERE `id`=:week LIMIT 1";
+		$sql = "SELECT * FROM `$attendance_table` WHERE `id`=:week LIMIT 1";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindParam(":week", $_GET['week'], PDO::PARAM_INT);
 		$stmt->execute();
@@ -29,7 +30,7 @@ if (isset($_GET['note']) && isset($_GET['property']) && isset($_GET['week']) && 
 	}
 
 	try {
-		$sql = "UPDATE `" . $_GET['property'] . "_attendance_" . date("Y") . "` SET `notes`=:notes WHERE `id`=:id";
+		$sql = "UPDATE `$attendance_table` SET `notes`=:notes WHERE `id`=:id";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(":notes", json_encode($notes), PDO::PARAM_STR);
 		$stmt->bindParam(":id", $_GET['week'], PDO::PARAM_INT);
