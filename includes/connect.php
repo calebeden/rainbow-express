@@ -1,11 +1,24 @@
 <?php
 date_default_timezone_set("America/Chicago");
 
-$server = "localhost";
-$dbname = "f4a02523964785"; // Staging database
-// $dbname = "c5802517713232"; // Production database
-$username = "MrCraftable";
-$password = "P4st4778";
+
+// Development server details
+// $server = "localhost";
+// $dbname = "rainbow_express";
+// $username = "MrCraftable";
+// $password = "P4st4778";
+
+// Staging details
+$server = "f4a02523964785.db.2523964.hostedresource.com";
+$dbname = "f4a02523964785";
+$username = "f4a02523964785";
+$password = " MJ6ObGRt{hf";
+
+//Production details
+// $server = "";
+// $dbname = "c5802517713232";
+// $username = "";
+// $password = "";
 
 $users_table = "rainbow_express_users";
 $properties_table = "rainbow_express_properties";
