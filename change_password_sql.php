@@ -8,7 +8,8 @@ if (!is_logged_in()) {
 require_once 'includes/connect.php';
 
 try {
-	$stmt = $conn->prepare('SELECT `password` FROM `users` WHERE `username`=:username');
+	$sql = "SELECT `password` FROM `$users_table` WHERE `username`=:username";
+	$stmt = $conn->prepare($sql);
 	$stmt->bindParam(':username', $_POST['username']);
 	$stmt->execute();
 	$results = $stmt->fetch();
@@ -24,7 +25,7 @@ if (password_verify($_POST['current_password'], $results['password'])) {
 		$hashed_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
 
 		try {
-			$sql = "UPDATE `users` SET `password`=:password WHERE `username`=:username";
+			$sql = "UPDATE `$users_table` SET `password`=:password WHERE `username`=:username";
 			$stmt = $conn->prepare($sql);
 			$stmt->bindParam(":username", $_POST['username'], PDO::PARAM_STR);
 			$stmt->bindParam(":password", $hashed_password, PDO::PARAM_STR);
@@ -47,7 +48,7 @@ if (password_verify($_POST['current_password'], $results['password'])) {
 	if ($_POST['new_password'] == $_POST['confirm_password']) {
 		$hashed_password = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
 		try {
-			$sql = "UPDATE `users` SET `password`=:password WHERE `username`=:username";
+			$sql = "UPDATE `$users_table` SET `password`=:password WHERE `username`=:username";
 			$stmt = $conn->prepare($sql);
 			$stmt->bindParam(":username", $_POST['username'], PDO::PARAM_STR);
 			$stmt->bindParam(":password", $hashed_password, PDO::PARAM_STR);

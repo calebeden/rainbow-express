@@ -1,8 +1,8 @@
 Create Database:
-CREATE DATABASE `rainbow_express` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+CREATE DATABASE `f4a02523964785` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 
 Table for login information:
-CREATE TABLE `users` (
+CREATE TABLE `rainbow_express_users` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) DEFAULT NULL,
 	`username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -11,10 +11,10 @@ CREATE TABLE `users` (
 	`properties` json DEFAULT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 Table for storing apartment church data:
-CREATE TABLE `properties` (
+CREATE TABLE `rainbow_express_properties` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
 	`street` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -24,8 +24,8 @@ CREATE TABLE `properties` (
 	PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
-Table for storing when R.E. occurred
-CREATE TABLE `dates` (
+Table for storing when R.E. occurred:
+CREATE TABLE `rainbow_express_dates` (
 	`id` int NOT NULL AUTO_INCREMENT,
 	`year` smallint NOT NULL,
  	`month` int NOT NULL,
@@ -33,3 +33,7 @@ CREATE TABLE `dates` (
 	`properties` json NOT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+
+
+To add initial admin account (can customize but default username is "admin" and password is "password"):
+INSERT INTO `rainbow_express_users` (`name`, `username`, `password`, `permissions`, `properties`) VALUES ('Admin', 'admin', 'password', '3', '[]');

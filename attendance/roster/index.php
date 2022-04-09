@@ -42,9 +42,11 @@ require_once '../../includes/connect.php';
 				<div class="col-lg-11">
 					<!-- py-2 px-3">-->
 					<?php
+					$roster_table = roster_table($_GET['property'], date("Y"));
+					$attendance_table = attendance_table($_GET['property'], date("Y"));
 					date_default_timezone_set("America/Chicago");
 					try {
-						$sql = "SELECT `name` FROM `properties` WHERE `id`=:id LIMIT 1";
+						$sql = "SELECT `name` FROM `$properties_table` WHERE `id`=:id LIMIT 1";
 						$stmt = $conn->prepare($sql);
 						$stmt->bindParam(":id", $_GET['property'], PDO::PARAM_INT);
 						$stmt->execute();
@@ -56,7 +58,7 @@ require_once '../../includes/connect.php';
 						echo "Error retreiving property information:" . $e->getMessage() . PHP_EOL;
 					}
 					try {
-						$sql = "SELECT * FROM `" . $_GET['property'] . "_roster`";
+						$sql = "SELECT * FROM `$roster_table`";
 						$stmt = $conn->prepare($sql);
 						$stmt->execute();
 						$rows = $stmt->fetchAll();
@@ -74,7 +76,7 @@ require_once '../../includes/connect.php';
 					try {
 						$today = date("Y-m-d");
 
-						$sql = "SELECT `participants`, `id`, `week_of` FROM `" . $_GET['property'] . "_attendance_" . date("Y") . "` WHERE `id`=:id LIMIT 1";
+						$sql = "SELECT `participants`, `id`, `week_of` FROM `$attendance_table` WHERE `id`=:id LIMIT 1";
 						$stmt = $conn->prepare($sql);
 						$stmt->bindParam(":id", $_GET['week']);
 						$stmt->execute();

@@ -5,7 +5,7 @@ require_once 'includes/session.php';
 try {
 	if (isset($_GET['search'])) {
 		// $sql = "SELECT `id`,`name` FROM `properties` WHERE  `name` LIKE '%" . $_GET['search'] . "%' ORDER BY `name`";
-		$sql = "SELECT `id`,`name` FROM `properties` WHERE  `name` LIKE :query ORDER BY `name`";
+		$sql = "SELECT `id`,`name` FROM `$properties_table` WHERE  `name` LIKE :query ORDER BY `name`";
 		$stmt = $conn->prepare($sql);
 		$query = "%" . $_GET['search'] . "%";
 		$stmt->bindParam(":query", $query, PDO::PARAM_STR);
@@ -13,7 +13,7 @@ try {
 		$sql = "SELECT `id`,`name` FROM `properties` WHERE MATCH `name` AGAINST ('+*".$_GET['search']."*' IN BOOLEAN MODE)";
 		$sql = "SELECT *, MATCH (`name`) AGAINST ('".$_GET['search']."'IN BOOLEAN MODE) AS Relevance FROM `properties` WHERE 1 AND MATCH (`name`) AGAINST ('".$_GET['search']."' IN BOOLEAN MODE) ORDER BY Relevance DESC"; */
 	} else {
-		$sql = "SELECT `id`,`name` FROM `properties` ORDER BY `name`";
+		$sql = "SELECT `id`,`name` FROM `$properties_table` ORDER BY `name`";
 		$stmt = $conn->prepare($sql);
 	}
 

@@ -29,9 +29,10 @@ if (isset($_GET['property']) && isset($_GET['row']) && isset($_GET['column']) &&
 
 function toggle_attendance($column, $week_id, $property, $conn)
 {
+	$attendance_table = attendance_table($property, date("Y"));
 	try {
 		// get previous value
-		$sql = "SELECT * FROM `" . $property . "_attendance_" . date("Y") . "` WHERE `id`=:id LIMIT 1";
+		$sql = "SELECT * FROM `$attendance_table` WHERE `id`=:id LIMIT 1";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindParam(":id", $week_id, PDO::PARAM_INT);
 		$stmt->execute();
@@ -48,7 +49,7 @@ function toggle_attendance($column, $week_id, $property, $conn)
 		array_splice($new_attendance, $key, 1);
 
 		try {
-			$sql = "UPDATE `" . $property . "_attendance_" . date("Y") . "` SET `" . $column . "`=:attendance WHERE `id`=:id";
+			$sql = "UPDATE `$attendance_table` SET `" . $column . "`=:attendance WHERE `id`=:id";
 			$stmt = $conn->prepare($sql);
 			$stmt->bindValue(":attendance", json_encode($new_attendance), PDO::PARAM_STR);
 			$stmt->bindParam(":id", $week_id, PDO::PARAM_INT);
@@ -62,7 +63,7 @@ function toggle_attendance($column, $week_id, $property, $conn)
 		$new_attendance[] = (int)$_GET['row'];
 
 		try {
-			$sql = "UPDATE `" . $property . "_attendance_" . date("Y") . "` SET `" . $column . "`=:attendance WHERE `id`=:id";
+			$sql = "UPDATE `$attendance_table` SET `" . $column . "`=:attendance WHERE `id`=:id";
 			$stmt = $conn->prepare($sql);
 			$stmt->bindValue(":attendance", json_encode($new_attendance), PDO::PARAM_STR);
 			$stmt->bindParam(":id", $week_id, PDO::PARAM_INT);
