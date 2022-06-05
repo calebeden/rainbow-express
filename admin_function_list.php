@@ -5,11 +5,10 @@
 		<a type="button" class="btn btn-primary mb-3 btn-lg" href="admin/new_account.php" role="button">Add New Account</a>
 	</div>
 	<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6">
-		<a type="button" class="btn btn-primary mb-3 btn-lg" href="admin/edit_permissions.php" role="button">Edit Account Permissions</a>
+		<a type="button" class="btn btn-primary mb-3 btn-lg" href="admin/accounts.php" role="button">View Accounts</a>
 	</div>
 	<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-6">
 		<a type="button" class="btn btn-primary mb-3 btn-lg" href="admin/create_report.php" role="button">Generate Report</a>
-
 	</div>
 	
 	<div class="col-xxl col-xl col-lg"></div>

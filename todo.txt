@@ -1,45 +1,39 @@
-Quality of Life:
-Forgot password
--email or admin intervention?
---could be email if they are prompted to link to email when first logging in
-Admin can view full list of username=>name
-error message for when trying to create duplicate location name
-auto-save message on JS-submitted info
-alert when trying to remove a participant with info already for the week
-Lock out of days not currently editing for attendance by disabling checkboxes until button pressed
-Something is weird about the placeholders for logging in
-Age calculator for new participant
+Updated todo list:
 
-Formatting and Background Details:
-html head info
-Be sure to put &reg; everywhere there is Rainbow Express, Mission Arlington, Mission Metroplex, Mission Arlington/Mission Metroplex
-switch bootstrap and maybe even jQuery out for ESM stuff
-figure out if tables should be ISAM or InnoDB (needed for CREATE TABLE)
-Decide if address required for properties
-Newlines in sql error messages
+* Admin view of all accounts
+* Finish different tiered accounts
+* Error message when trying to create location with the same name as an existing one
 
-Security:
-Validate forms on client and server side (ex. the keyup function could let someone submit if they are fast enough)
-.htaccess file(s) and error pages
--also redirect away from restricted pages (ex. *_sql.php)
-ASSIGN church groups to sites rather than having them type it out themselves
+* Forgot password for login - might need admin aproval since accounts not tied to email
+* Change password if auto-generated on first login
+* See if I can fix the floating labels on the login screen
 
-1.1 Release:
-View previous weeks on site-level
-Filter sites when generating weekly report
-Change GET to POST for JS queries to SQL
-Mark if Thurs-indexed
-Sort and search roster
-remember me on login page - needs client side cookies
-Go back and do graceful degredation for css and js
--Turn roster and attendance into forms for non-JS
-Edit and delete participant records in roster
-Favicon
+* Assign volunteers to sites by admin rather than selecting it themselves
+* View previous weeks filtered by site
+* Decide if properties need street address
+* Indicate if a session starts on Thurs
 
-1.2 Release:
-New roster for each year
+* Warning when trying to delete participant with info entered for the week already
+* Edit and delete participant records in roster
+* Sort and search a property's roster
+* New roster for each year
+* Prevent accidentally editing days other than today unless override box for column checked
+* Age calculator when adding a new participant
 
-At very end:
-Clean up code and comments
-Get fontawesome off my development kit
-Figure out production alternative for WAMP that uses innoDB or ISAM (see bullet above for database type)
+* Form validation on both client and server
+* Make all database tables either ISAM or InnoDB in the CREATE TABLE statements
+* Auto-save message on things submitted via JQuery AJAX calls
+* Change GET AJAX SQL calls to POST
+* htaccess file(s) and error pages
+* Redirect away from restricted pages (*_sql.php)
+* Graceful degradation for CSS and JS
+* html head info on all the pages
+* Favicon
+* Clean up code and comments
+* Change fontawesome from my development kit
+* Change Bootstrap and maybe JQuery to ESM version
+* Newlines in sql error messages (not exactly sure what I meant by this)
+* Be sure to format Rainbow Express, Mission Arlington, Mission Metroplex, Mission Arlington/Mission Metroplex with a &reg;
+* Remember me option using cookies
+
+* Figure out hosting
