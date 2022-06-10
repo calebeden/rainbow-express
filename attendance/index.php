@@ -46,7 +46,7 @@ require_once '../includes/connect.php';
 					$attendance_table = attendance_table($_GET['property'], date("Y"));
 
 					try {
-						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='$dbname' AND table_name = '$roster_table' LIMIT 1";
+						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='$database_info[dbname]' AND table_name = '$roster_table' LIMIT 1";
 						$stmt = $conn->prepare($sql);
 						$stmt->execute();
 						$table = $stmt->fetch();
@@ -78,7 +78,7 @@ require_once '../includes/connect.php';
 					}
 
 					try {
-						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='$dbname' AND table_name = '$attendance_table' LIMIT 1";
+						$sql = "SELECT * FROM information_schema.tables WHERE table_schema='$database_info[dbname]' AND table_name = '$attendance_table' LIMIT 1";
 						$stmt = $conn->prepare($sql);
 						$stmt->execute();
 						$table = $stmt->fetch();

@@ -22,23 +22,15 @@ if (!is_admin()) {
 	</base>
 	<link rel="shortcut icon" href="favicon.ico?" />
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
-	<title>Rainbow Express · Edit Account Permissions</title>
+	<title>Rainbow Express · Edit Account</title>
 </head>
 
 <body>
 	<?php include '../common/navbar.php' ?>
 	<main role="main">
 		<div class="container card">
-			<form class="form-signin" action="admin/edit_permissions_sql.php" method="post" enctype="multipart/form-data" autocomplete="off">
-				<h1 class="h3 mb-3 font-weight-normal">Edit Account Permissions:</h1>
-
-				<fieldset class="mb-3">
-					<legend>
-						<label for="username" class="sr-only">Username
-						</label>
-					</legend>
-					<input type="text" name="username" id="username" class="form-control" placeholder="Username" required autofocus />
-				</fieldset>
+			<form class="form-signin" action="admin/edit_account_sql.php" method="post" enctype="multipart/form-data" autocomplete="off">
+				<?php echo "<h1 class='h3 mb-3 font-weight-normal'>Edit $_GET[username]:</h1>" . PHP_EOL; ?>
 
 				<div id="search_result">
 				</div>

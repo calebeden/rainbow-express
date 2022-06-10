@@ -1,7 +1,7 @@
 Updated todo list:
 
 * Admin view of all accounts
-* Finish different tiered accounts
+* Redo edit account
 * Error message when trying to create location with the same name as an existing one
 
 * Forgot password for login - might need admin aproval since accounts not tied to email
@@ -35,5 +35,6 @@ Updated todo list:
 * Newlines in sql error messages (not exactly sure what I meant by this)
 * Be sure to format Rainbow Express, Mission Arlington, Mission Metroplex, Mission Arlington/Mission Metroplex with a &reg;
 * Remember me option using cookies
+* Check double vs single quoted php strings
 
 * Figure out hosting
